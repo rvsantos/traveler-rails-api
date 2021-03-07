@@ -9,7 +9,7 @@ describe 'Categories API', type: :request do
       post '/categories', params: params.to_json, headers: headers
     end
 
-    context 'with a valid params' do
+    context 'with valid params' do
       let(:params) { attributes_for(:category) }
 
       it 'returns status code 201' do
@@ -21,7 +21,7 @@ describe 'Categories API', type: :request do
       end
     end
 
-    context 'without a valid params' do
+    context 'without valid params' do
       let(:params) { attributes_for(:category, name: '') }
 
       it 'returns status code 422' do
@@ -48,7 +48,7 @@ describe 'Categories API', type: :request do
     end
   end
 
-  context 'when update category' do
+  context 'when updating the category' do
     let!(:category) { create(:category) }
     let!(:category_id) { category.id }
 
@@ -57,7 +57,7 @@ describe 'Categories API', type: :request do
                                           headers: headers
     end
 
-    context 'when params are valid' do
+    context 'with valid parameters' do
       let(:params) { attributes_for(:category, name: 'Padaria') }
 
       it 'returns status code 200' do
@@ -69,7 +69,7 @@ describe 'Categories API', type: :request do
       end
     end
 
-    context 'when params are not valid' do
+    context 'with invalid parameters' do
       let(:params) { attributes_for(:category, name: '') }
 
       it 'returns status code 422' do
@@ -81,7 +81,7 @@ describe 'Categories API', type: :request do
       end
     end
 
-    context 'when the category not found' do
+    context 'with invalid id' do
       let(:category_id) { 1000 }
       let(:params) { attributes_for(:category, name: 'Padaria') }
 
