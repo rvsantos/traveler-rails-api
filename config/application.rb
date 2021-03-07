@@ -30,9 +30,11 @@ module TravelerApi
       g.stylesheets = false
       g.javascripts = false
       g.helper = false
+      g.orm :active_record, primary_key_type: :uuid
     end
 
     config.autoload_paths += %W[\#{config.root}/lib]
+
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
