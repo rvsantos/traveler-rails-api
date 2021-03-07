@@ -46,6 +46,7 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   # Include helpers
+  config.include ApiHelpers
   config.include JSONAPI::RSpec
   config.include FactoryBot::Syntax::Methods
 
