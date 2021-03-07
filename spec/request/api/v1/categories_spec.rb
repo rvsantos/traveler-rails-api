@@ -33,4 +33,18 @@ describe 'Categories API', type: :request do
       end
     end
   end
+
+  context 'when show all categories' do
+    before { get '/categories', params: {}, headers: headers }
+
+    let!(:categories) { create_list(:category, 10) }
+
+    it 'returns status code 200' do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'returns a list of categories' do
+      expect(Category.count).to eq(10)
+    end
+  end
 end
