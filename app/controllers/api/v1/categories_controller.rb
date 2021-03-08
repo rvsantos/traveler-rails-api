@@ -1,5 +1,5 @@
 class Api::V1::CategoriesController < ApplicationController
-  before_action :find_category, only: [:update]
+  before_action :find_category, only: [:update, :show]
 
   def index
     @categories = Category.all
@@ -14,6 +14,10 @@ class Api::V1::CategoriesController < ApplicationController
   def update
     @category.update!(set_params)
     json_response(@category) if @category
+  end
+
+  def show
+    json_response(@category)
   end
 
   private

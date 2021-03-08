@@ -34,7 +34,7 @@ describe 'Categories API', type: :request do
     end
   end
 
-  context 'when show all categories' do
+  context 'when list all categories' do
     before { get '/categories', params: {}, headers: headers }
 
     let!(:categories) { create_list(:category, 10) }
@@ -45,6 +45,35 @@ describe 'Categories API', type: :request do
 
     it 'returns a list of categories' do
       expect(Category.count).to eq(10)
+    end
+  end
+
+  context 'when show a specific category' do
+    before { get "/categories/#{category_id}", params: {}, headers: headers }
+
+    let!(:categories) { create_list(:category, 10) }
+    let(:category_id) { categories[4].id }
+
+    context 'with valid id' do
+      it 'returns status code 200' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns the category of the specified id' do
+        expect(json[:id]).to eq(category_id)
+      end
+    end
+
+    context 'with invalid id' do
+      let(:category_id) { 1000 }
+
+      it 'returns status code 404' do
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'returns json with errors key' do
+        expect(json).to have_key(:errors)
+      end
     end
   end
 
