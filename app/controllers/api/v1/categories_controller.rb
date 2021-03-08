@@ -1,5 +1,5 @@
 class Api::V1::CategoriesController < ApplicationController
-  before_action :find_category, only: [:update, :show]
+  before_action :find_category, only: [:update, :show, :destroy]
 
   def index
     @categories = Category.all
@@ -18,6 +18,11 @@ class Api::V1::CategoriesController < ApplicationController
 
   def show
     json_response(@category)
+  end
+
+  def destroy
+    @category.destroy!
+    head 204
   end
 
   private

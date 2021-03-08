@@ -119,4 +119,29 @@ describe 'Categories API', type: :request do
       end
     end
   end
+
+  context 'when delete a specific category' do
+    before { delete "/categories/#{category_id}", params: {}, headers: headers }
+
+    let!(:category) { create(:category) }
+    let(:category_id) { category.id }
+
+    context 'with valid id' do
+      it 'returns status code 204' do
+        expect(response).to have_http_status(:no_content)
+      end
+
+      it 'returns the category of the specified id' do
+        expect(Category.count).to eq(0)
+      end
+    end
+
+    context 'with invalid id' do
+      let(:category_id) { 1000 }
+
+      it 'returns status code 404' do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end
