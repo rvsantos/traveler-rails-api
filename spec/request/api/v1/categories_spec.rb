@@ -34,6 +34,23 @@ describe 'Categories API', type: :request do
     end
   end
 
+  context 'when database already have 3 categories registered' do
+    before do
+      create_list(:category, 3)
+      post '/categories', params: params.to_json, headers: headers
+    end
+
+    context 'with valid parameters' do
+      let(:params) { attributes_for(:category) }
+
+      it { expect(response).to have_http_status(:unprocessable_entity) }
+
+      it 'returns json with errors key' do
+        expect(json).to have_key(:errors)
+      end
+    end
+  end
+
   context 'when list all categories' do
     before { get '/categories', params: {}, headers: headers }
 
